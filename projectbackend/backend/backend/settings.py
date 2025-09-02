@@ -138,7 +138,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     # For production on Render
-    "https://collab-coding-app-frontend.onrender.com",
+    "https://skillconnect-learn-together-solve-lqal.onrender.com",
     # For local development
     "http://localhost:3000",
     "http://127.0.0.1:3000",
@@ -146,7 +146,7 @@ CORS_ALLOWED_ORIGINS = [
 
 # If you are using Django Rest Framework with CORS, also check CSRF_TRUSTED_ORIGINS
 CSRF_TRUSTED_ORIGINS = [
-    "https://collab-coding-app-frontend.onrender.com",
+    "https://skillconnect-learn-together-solve-lqal.onrender.com",
 ]
 
 # For React integration (not for production)
