@@ -8,10 +8,13 @@ const express = require("express");
 const app = express();
 const http = require("http").createServer(app);
 
+// Get the frontend URL from environment variables, with a fallback for local development
+const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000";
+
 // Configure Socket.IO with CORS settings to allow cross-origin requests
 const io = require("socket.io")(http, {
   cors: {
-    origin: "*", // Allow connections from any origin
+    origin: frontendURL, // Use the environment variable for the origin
     methods: ["GET", "POST"], // Allow only GET and POST methods
   },
 });
