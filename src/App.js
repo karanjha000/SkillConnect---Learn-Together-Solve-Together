@@ -22,11 +22,11 @@ import "./styles/animations.css";
  * - Configures exponential backoff for reconnection attempts
  * - Limits maximum reconnection attempts
  */
-const socket = io("http://localhost:5000", {
-  reconnection: true,          // Enable auto-reconnection
-  reconnectionDelay: 1000,     // Initial delay between attempts (1s)
-  reconnectionDelayMax: 5000,  // Maximum delay between attempts (5s)
-  reconnectionAttempts: 5,     // Maximum number of reconnection attempts
+const socket = io("https://skillconnect-learn-together-solve-s4pg.onrender.com", {
+  reconnection: true, // Enable auto-reconnection
+  reconnectionDelay: 1000, // Initial delay between attempts (1s)
+  reconnectionDelayMax: 5000, // Maximum delay between attempts (5s)
+  reconnectionAttempts: 5, // Maximum number of reconnection attempts
 });
 
 /**
@@ -108,9 +108,9 @@ const registerTailwindAnimations = () => {
       theme: {
         ...window.tailwind?.theme,
         animation: {
-          fadeOut: "fadeOut 3s forwards",      // 3s duration for fade out
-          slideDown: "slideDown 0.3s ease-out forwards",  // Quick dropdown
-          slideIn: "slideIn 0.3s ease-out forwards",      // Smooth entrance
+          fadeOut: "fadeOut 3s forwards", // 3s duration for fade out
+          slideDown: "slideDown 0.3s ease-out forwards", // Quick dropdown
+          slideIn: "slideIn 0.3s ease-out forwards", // Smooth entrance
         },
       },
     };
@@ -124,7 +124,7 @@ registerTailwindAnimations();
  * DSA Problem Database
  * Organized collection of Data Structures and Algorithms problems
  * categorized by topics and difficulty levels.
- * 
+ *
  * Structure:
  * - Topics as main categories
  * - Each problem contains:
@@ -132,7 +132,7 @@ registerTailwindAnimations();
  *   - Title
  *   - Difficulty (Easy/Medium/Hard)
  *   - Detailed description
- * 
+ *
  * Used for:
  * - Problem selection in collaboration rooms
  * - Practice problem suggestions
@@ -225,67 +225,67 @@ export default function App() {
    * UI State Management
    * Controls visibility and interaction states of various UI components
    */
-  const [showModal, setShowModal] = useState(false);          // Controls modal visibility
-  const [showForgot, setShowForgot] = useState(false);       // Controls forgot password UI
-  const [showSignupSuccess, setShowSignupSuccess] = useState(false);  // Shows signup success message
-  
+  const [showModal, setShowModal] = useState(false); // Controls modal visibility
+  const [showForgot, setShowForgot] = useState(false); // Controls forgot password UI
+  const [showSignupSuccess, setShowSignupSuccess] = useState(false); // Shows signup success message
+
   /**
    * Authentication State
    * Manages user authentication status
    */
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
+
   /**
    * Problem Management State
    * Handles DSA problem selection and display
    */
-  const [showDSAProblems, setShowDSAProblems] = useState(false);  // Controls problem list visibility
-  const [selectedProblem, setSelectedProblem] = useState(null);    // Currently selected problem
-  const [selectedTopic, setSelectedTopic] = useState(null);        // Selected problem category
-  
+  const [showDSAProblems, setShowDSAProblems] = useState(false); // Controls problem list visibility
+  const [selectedProblem, setSelectedProblem] = useState(null); // Currently selected problem
+  const [selectedTopic, setSelectedTopic] = useState(null); // Selected problem category
+
   /**
    * Navigation and Layout State
    * Manages page navigation and scroll positions
    */
   const [currentPage, setCurrentPage] = useState("home");
   const [topicsScrollPosition, setTopicsScrollPosition] = useState(0);
-  
+
   /**
    * Notification System State
    * Handles system notifications and connection status
    */
   const [notifications, setNotifications] = useState([]);
   const [isConnected, setIsConnected] = useState(socket.connected);
-  
+
   /**
    * Collaboration and Invitation Management
    * Handles real-time collaboration features and invitation system
    */
-  const [receivedInvites, setReceivedInvites] = useState([]);     // List of received invitations
-  const [showInvitePopup, setShowInvitePopup] = useState(false);  // Controls invite popup visibility
-  const [currentInvite, setCurrentInvite] = useState(null);       // Currently displayed invite
-  const [inviteQueue, setInviteQueue] = useState([]);             // Queue of pending invites
-  const [activeRoom, setActiveRoom] = useState(null);             // Current collaboration room
+  const [receivedInvites, setReceivedInvites] = useState([]); // List of received invitations
+  const [showInvitePopup, setShowInvitePopup] = useState(false); // Controls invite popup visibility
+  const [currentInvite, setCurrentInvite] = useState(null); // Currently displayed invite
+  const [inviteQueue, setInviteQueue] = useState([]); // Queue of pending invites
+  const [activeRoom, setActiveRoom] = useState(null); // Current collaboration room
 
   /**
    * Room Exit Handler
    * Manages the cleanup and state updates when a user leaves a room
-   * 
+   *
    * Flow:
    * 1. Server Notification
    *    - Emits leave-room event
    *    - Updates room participant list
-   * 
+   *
    * 2. State Cleanup
    *    - Resets active room
    *    - Clears code editor
    *    - Removes room-specific listeners
-   * 
+   *
    * 3. UI Updates
    *    - Shows exit confirmation
    *    - Updates navigation state
    *    - Cleans up collaborative features
-   * 
+   *
    * Error Handling:
    * - Validates room state before cleanup
    * - Ensures graceful degradation
@@ -304,7 +304,7 @@ export default function App() {
    * Processes user response to collaboration invites
    * @param {Object} invite - The invitation object
    * @param {boolean} accepted - Whether the invite was accepted
-   * 
+   *
    * Handles both acceptance and rejection:
    * - For acceptance:
    *   1. Creates unique room ID
@@ -369,7 +369,7 @@ export default function App() {
   /**
    * Socket.IO Event Handler Setup
    * Establishes all real-time communication handlers on component mount
-   * 
+   *
    * Handles:
    * 1. Connection lifecycle events
    * 2. Room management
@@ -381,18 +381,18 @@ export default function App() {
     /**
      * Connection Lifecycle Handlers
      * Manages socket connection states and presence system
-     * 
+     *
      * Connection States:
      * 1. Initial Connection
      *    - Establishes socket connection
      *    - Updates connection state
      *    - Registers user presence
-     * 
+     *
      * 2. Disconnection
      *    - Handles graceful disconnects
      *    - Updates UI state
      *    - Prepares for reconnection
-     * 
+     *
      * Features:
      * - Auto-presence registration
      * - Temporary user identification
@@ -402,18 +402,18 @@ export default function App() {
     socket.on("connect", () => {
       console.log("Connected to server");
       setIsConnected(true);
-      
+
       // Register user in presence system
       socket.emit("user_online", {
-        userId: "user-" + Date.now(),  // Unique temporary identifier
-        userName: "User",              // Default display name
+        userId: "user-" + Date.now(), // Unique temporary identifier
+        userName: "User", // Default display name
       });
     });
 
     /**
      * Disconnection Handler
      * Manages cleanup and state updates on connection loss
-     * 
+     *
      * Actions:
      * - Logs disconnect event
      * - Updates connection state
@@ -427,22 +427,22 @@ export default function App() {
     /**
      * Connection Error Handler
      * Manages socket connection failures and error recovery
-     * 
+     *
      * Features:
      * 1. Error Logging
      *    - Console output for debugging
      *    - Error state tracking
-     * 
+     *
      * 2. User Feedback
      *    - Visual notifications
      *    - Reconnection status updates
-     * 
+     *
      * 3. Error Recovery
      *    - Automatic reconnection attempts
      *    - Error state cleanup
-     *    
+     *
      * @param {Error} error - Socket.IO error object
-     * 
+     *
      * Error Types Handled:
      * - Network connectivity issues
      * - Server unavailability
@@ -469,13 +469,13 @@ export default function App() {
     /**
      * Room Join Handler
      * Manages successful room join operations
-     * 
+     *
      * @param {Object} data - Room join event data
      * @param {string} data.roomId - Unique room identifier
      * @param {string} data.username - Username of joining participant
      * @param {string} data.problemTitle - Title of problem being collaborated on
      * @param {Array} [data.users] - List of current room participants
-     * 
+     *
      * Actions:
      * 1. Creates success notification
      * 2. Updates active room state
@@ -484,7 +484,7 @@ export default function App() {
     socket.on("room-joined", (data) => {
       console.log("Joined room:", data);
       const { roomId, username, problemTitle } = data;
-      
+
       // Create success notification with participant info
       setNotifications((prev) => [
         ...prev,
@@ -494,25 +494,25 @@ export default function App() {
           type: "success",
         },
       ]);
-      
+
       // Initialize room state with participant tracking
       setActiveRoom({
         roomId,
         problemTitle,
-        participants: data.users || [],  // Initialize participants list
+        participants: data.users || [], // Initialize participants list
       });
     });
 
     /**
      * Invite Acceptance Handler
      * Manages response when someone accepts our collaboration invite
-     * 
+     *
      * Flow:
      * 1. Receives acceptance confirmation
      * 2. Extracts room details
      * 3. Joins the collaboration room
      * 4. Sets up for collaborative coding
-     * 
+     *
      * @param {Object} data - Acceptance data
      * @param {string} data.roomId - Unique room identifier
      * @param {string} data.acceptedBy - ID of user who accepted
@@ -521,18 +521,18 @@ export default function App() {
     /**
      * Invite Acceptance Handler
      * Manages the workflow when an invite is accepted by another user
-     * 
+     *
      * @param {Object} data - Acceptance event data
      * @param {string} data.roomId - Collaboration room identifier
      * @param {string} data.acceptedBy - ID of accepting user
      * @param {string} data.problemTitle - Problem to collaborate on
-     * 
+     *
      * Flow:
      * 1. Validates acceptance data
      * 2. Joins collaboration room
      * 3. Initializes sender's environment
      * 4. Sets up bidirectional communication
-     * 
+     *
      * Notifications:
      * - Logs acceptance for debugging
      * - Updates room state for tracking
@@ -540,7 +540,7 @@ export default function App() {
     socket.on("invite-accepted", (data) => {
       console.log("Invite accepted:", data);
       const { roomId, acceptedBy, problemTitle } = data;
-      
+
       // Initialize sender's room participation
       socket.emit("join-room", {
         roomId: roomId,
@@ -553,13 +553,13 @@ export default function App() {
     /**
      * Invitation Reception Handler
      * Processes incoming collaboration invitations and manages the invite queue
-     * 
+     *
      * Features:
      * 1. Invitation data normalization
      * 2. Queue management
      * 3. Notification system
      * 4. Auto-dismissal
-     * 
+     *
      * @param {Object} data - Raw invitation data
      * @param {string} data.title - Problem title
      * @param {string} data.note - Optional message
@@ -569,17 +569,18 @@ export default function App() {
      */
     socket.on("receive-invite", (data) => {
       console.log("Received invite:", data);
-      
+
       // Normalize and structure the invitation data
       const newInvite = {
-        id: Date.now(),                    // Unique identifier for this invite
-        title: data.title || "Untitled Problem",  // Fallback title
-        note: data.note || "Would you like to join this problem-solving session?",
+        id: Date.now(), // Unique identifier for this invite
+        title: data.title || "Untitled Problem", // Fallback title
+        note:
+          data.note || "Would you like to join this problem-solving session?",
         sender: data.sender || "Anonymous", // Fallback sender name
         senderId: data.senderId,
         timestamp: new Date().toISOString(),
         problemId: data.problemId,
-        status: "pending",                 // Initial invite status
+        status: "pending", // Initial invite status
       };
 
       // Store invite in history for tracking
@@ -624,7 +625,7 @@ export default function App() {
   /**
    * Scroll Position Management
    * Restores scroll position when DSA problems list is displayed
-   * 
+   *
    * Features:
    * - Uses requestAnimationFrame for smooth rendering
    * - Maintains user's scroll position between views
@@ -647,7 +648,7 @@ export default function App() {
   /**
    * Authentication View
    * Renders authentication flow when user is not authenticated
-   * 
+   *
    * Components:
    * 1. AuthPage - Main authentication form
    * 2. Success Popup - Shows after successful signup
@@ -728,7 +729,7 @@ export default function App() {
   /**
    * Problem Detail View
    * Displays detailed information about a selected DSA problem
-   * 
+   *
    * Features:
    * - Problem description
    * - Solution workspace
@@ -753,7 +754,7 @@ export default function App() {
   /**
    * Topic Problems View
    * Shows all problems within a selected topic category
-   * 
+   *
    * Features:
    * - Problem list by difficulty
    * - Problem selection
@@ -793,7 +794,7 @@ export default function App() {
   /**
    * Topics Overview Page
    * Displays all available DSA topics
-   * 
+   *
    * Features:
    * - Topic categories
    * - Navigation
@@ -825,15 +826,15 @@ export default function App() {
     <div className="h-screen flex flex-col items-center bg-gray-100 overflow-hidden relative">
       {/* Animated Background */}
       <AnimatedBackground />
-      
+
       {/* Animated Logo */}
       <div className="absolute top-4 left-4 z-10">
         <AnimatedLogo />
       </div>
-      
+
       {/* Dynamic Background Pattern */}
       <div className="absolute inset-0 pattern-grid opacity-20 z-0" />
-      
+
       {/* Enhanced Invite Popup Notification */}
       {showInvitePopup && currentInvite && (
         <div className="fixed top-4 right-4 bg-white rounded-lg shadow-xl p-6 max-w-sm w-full z-50 transform transition-all duration-300 animate-slideIn border border-gray-200">
@@ -1276,7 +1277,7 @@ function GlobalLobby({ receivedInvites }) {
               >
                 {/* Hover Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover/item:opacity-100 rounded-lg transition-all duration-300" />
-                
+
                 {/* Content */}
                 <div className="relative z-10 flex items-center gap-3">
                   {/* User Avatar */}
@@ -1308,7 +1309,8 @@ function GlobalLobby({ receivedInvites }) {
                           : "bg-yellow-100 text-yellow-800"
                       }`}
                     >
-                      {invite.status.charAt(0).toUpperCase() + invite.status.slice(1)}
+                      {invite.status.charAt(0).toUpperCase() +
+                        invite.status.slice(1)}
                     </span>
                   </div>
                 </div>
@@ -1329,15 +1331,24 @@ function GlobalLobby({ receivedInvites }) {
         <div className="grid grid-cols-3 gap-2">
           <div className="bg-gray-100/50 rounded-lg p-1.5 text-center">
             <div className="text-xs text-gray-600">Active</div>
-            <div className="text-sm font-semibold text-gray-800">{receivedInvites?.filter(i => i.status === "pending").length || 0}</div>
+            <div className="text-sm font-semibold text-gray-800">
+              {receivedInvites?.filter((i) => i.status === "pending").length ||
+                0}
+            </div>
           </div>
           <div className="bg-gray-100/50 rounded-lg p-1.5 text-center">
             <div className="text-xs text-gray-600">Accepted</div>
-            <div className="text-sm font-semibold text-green-600">{receivedInvites?.filter(i => i.status === "accepted").length || 0}</div>
+            <div className="text-sm font-semibold text-green-600">
+              {receivedInvites?.filter((i) => i.status === "accepted").length ||
+                0}
+            </div>
           </div>
           <div className="bg-gray-100/50 rounded-lg p-1.5 text-center">
             <div className="text-xs text-gray-600">Declined</div>
-            <div className="text-sm font-semibold text-red-600">{receivedInvites?.filter(i => i.status === "rejected").length || 0}</div>
+            <div className="text-sm font-semibold text-red-600">
+              {receivedInvites?.filter((i) => i.status === "rejected").length ||
+                0}
+            </div>
           </div>
         </div>
       </div>

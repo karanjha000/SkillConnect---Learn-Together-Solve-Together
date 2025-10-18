@@ -9,7 +9,7 @@ const app = express();
 const http = require("http").createServer(app);
 
 // Get the frontend URL from environment variables, with a fallback for local development
-const frontendURL = process.env.FRONTEND_URL || "http://localhost:3000";
+const frontendURL = process.env.FRONTEND_URL || "https://skillconnect-learn-together-solve-lqal.onrender.com/";
 
 // Configure Socket.IO with CORS settings to allow cross-origin requests
 const io = require("socket.io")(http, {
